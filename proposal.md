@@ -1,4 +1,4 @@
-#Major project proposal
+# Major project proposal
 
 ## Description
 I want to polish the original rhythm game scraps that I made (scene in my original repository) and add to it
