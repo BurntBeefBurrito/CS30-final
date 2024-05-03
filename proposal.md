@@ -18,7 +18,7 @@ I want to polish the original rhythm game scraps that I made (scene in my origin
 ## Nice to have
 - easter eggs (out of season)
 - a chart for additional mechanics, to overcomplicate what could be simple gameplay
-  - 
+  - this could include 
 - another map for adding visual effects, to make the game more pleasing to the eye than simply just vertically moving notes
 - scoring (to compete with other people)
-- 
+- limbo keys https://youtu.be/ryBbuH_SPbs?t=188
