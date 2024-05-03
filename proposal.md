@@ -1,4 +1,5 @@
 # Major project proposal
+Wait how do I rename the repository
 
 ## Description
 I want to polish the original rhythm game scraps that I made (scene in my original repository) and add to it
@@ -10,6 +11,7 @@ I want to polish the original rhythm game scraps that I made (scene in my origin
 - a basic tutorial
 - an additional program for charting support
 - basic "flavour" to make hitting notes feel responsive and rewarding (audio and visual reactions)
+- a funny name for the rhythm game itself
 
 ## Nice to have
 - easter eggs (out of season)
