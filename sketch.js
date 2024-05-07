@@ -21,7 +21,7 @@ let noteTraits = []; //the updated lane and distance array
 let state; // is it in a menu, or playing?
 let binds; //keybindings the user presses
 
-//visual variables
+//visual variables, will probably be baked together into a single object or smth
 let offsetx; //how offset are the lanes and things? This will be used for silly mechanics when i get around to them
 let spacing; //how spaced are the lanes?
 
@@ -50,13 +50,6 @@ function setup() {
   spacing = 240; //use 240
   imageMode(CENTER);
 
-  // let tempNote = {
-  //   speed: noteSpeed,
-  //   lane: round(random(0, lanes-1)),
-  //   distance: round(windowHeight + 100),
-
-  // };
-  // noteTraits.push(tempNote);
 }
 
 function draw() {
@@ -69,7 +62,7 @@ function draw() {
   // } 
 }
 
-// function menu(){ //...its a menu...
+// function menu(){ ...its a menu... itll likely be branched out into multiple menus
 //   text("This is a very high budget menu. hit left click to play the thing", windowWidth/2 - 150, windowHeight/2);
 //   if (mouseIsPressed){
 //     state = "play";
