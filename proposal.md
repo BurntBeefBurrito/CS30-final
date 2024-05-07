@@ -11,6 +11,7 @@ I want to polish the original rhythm game scraps that I made (scene in my origin
 - menus for picking a song, settings, credits for musicians and inspirations, and instructions
   - the settings menu will include volume, hitsounds and likely other settings
 - a basic tutorial
+  - this will serve as a tutorial and also as a first map for practicing map making
 - an additional program for charting support
   - this is so that I can create maps without losing my sanity
 - basic "flavour" to make hitting notes feel responsive and rewarding (audio and visual reactions)
@@ -33,7 +34,7 @@ I want to polish the original rhythm game scraps that I made (scene in my origin
 - chatgpt integration (nathans recommendation)
 - limbo keys https://youtu.be/ryBbuH_SPbs?t=188 (flashy colours warning?)
 
-## Credits/inspirations
+## Credits/inspirations (awesome colour warning for the linked videos)
 - Make it funky now modchart on osu https://www.youtube.com/watch?v=PQsBAXkgm04
 - Limbo from geometry dash https://youtu.be/ryBbuH_SPbs?t=15
 - Dancedance revolution as a whole
