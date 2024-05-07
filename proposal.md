@@ -5,16 +5,19 @@ Wait how do I rename the repository
 I want to polish the original rhythm game scraps that I made (scene in my original repository) and add to it
 
 ## Needs to have
+- music
 - charts/maps for notes
-  - I do not want randomized note spawns as they would be incredibly unfun in my eyes
+  - I do not want randomized note spawns as they would be incredibly unfun in my opinion
 - two songs and associated charts
-- menus for picking a song, settings, credits for musicians and inspirations, and instructions
+  - this is core to gameplay
+- menus for picking a song, settings, credits for musicians and inspirations
   - the settings menu will include volume, hitsounds and likely other settings
 - a basic tutorial
   - this will serve as a tutorial and also as a first map for practicing map making
 - an additional program for charting support
   - this is so that I can create maps without losing my sanity
 - basic "flavour" to make hitting notes feel responsive and rewarding (audio and visual reactions)
+  - the cues will be less satisfying if your hits are less on beat
 - a funny name for the rhythm game itself
   - this is absolutely necessary, trust me
 - custom made sprites for bumpers, notes, etc
@@ -32,7 +35,7 @@ I want to polish the original rhythm game scraps that I made (scene in my origin
 - a "fever meter" which you fill up by hitting notes and activate to temporarily increase point gains
   - I believe guitar hero had something like this or maybe rock band
 - chatgpt integration (nathans recommendation)
-- limbo keys https://youtu.be/ryBbuH_SPbs?t=188 (flashy colours warning?)
+- limbo keys https://youtu.be/ryBbuH_SPbs?t=188 (flashy colours warning)
 
 ## Credits/inspirations (awesome colour warning for the linked videos)
 - Make it funky now modchart on osu https://www.youtube.com/watch?v=PQsBAXkgm04
