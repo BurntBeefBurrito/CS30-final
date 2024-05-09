@@ -6,28 +6,21 @@
 
 let grid;
 let cellSize;
-const beats = 20; //how long the thing is
+const beats = 40; //how long the thing is
 const lanes = 4;
 const VISIBLE_GRID_SIZE = { //odd numbers strongly recommended
   w: 4, //width
-  h: 9, //height
+  h: 12, //height
 };
-const PLAYER = 9;
 let state = "menu";
-let player = { //gonna remove the non essential parts of player (everything except y)
-  x: 0,
-  y: 0,
-  ontile: 0,
+let player = {
+  y: 6,
 };
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
   grid = generateEmptyGrid(lanes, beats);
-  grid[player.y][player.x] = PLAYER;
   noSmooth();
-  VISIBLE_GRID_SIZE.wf = Math.floor(VISIBLE_GRID_SIZE.w/2); //width floor these were useful in the past
-  VISIBLE_GRID_SIZE.wc = Math.ceil(VISIBLE_GRID_SIZE.w/2); //width ceiling
   VISIBLE_GRID_SIZE.hf = Math.floor(VISIBLE_GRID_SIZE.h/2); //height floor
   VISIBLE_GRID_SIZE.hc = Math.ceil(VISIBLE_GRID_SIZE.h/2); //height ceiling
 }
@@ -41,53 +34,42 @@ function draw() {
     cellSize = width/VISIBLE_GRID_SIZE.w;
   }
   if (state === "menu"){
-    background("black");
-    text("hit space to start the thing, use wasd, e, r, t and left click to do stuff", windowWidth/2 - 150, windowHeight/2);
+    background(50);
+    text("this is a mapping thing, made for my convenience not yours. But nonetheless, click stuff and use w and d to scroll up and down, also hit E to save ;)", windowWidth/2 - 350, windowHeight/2);
   }
   else{
-    background(135, 196, 235);
+    background(35, 36, 80);
     displayVisGrid();
   }
-
-
-
 }
 
 function keyPressed() { //causes various things to happen when keys are pressed
 
-  if (key === "e") {
+  if (key === "e") { //clears
     grid = generateEmptyGrid(lanes, beats);
   }
-  if (key === "w") {
-    movePlayer(player.x + 0, player.y -1); //0 on x, -1 on y...
+  if (key === "w") { //moves view up
+    movePlayer(player.y -1); 
   }
-  if (key === "s") {
-    movePlayer(player.x, player.y + 1);
+  if (key === "s") { //moves view down
+    movePlayer(player.y + 1);
   }
   if (key === " " && state === "menu"){
     state = "thing";
   }
 }
 
-function mousePressed() { //transforms tiles when clicked on, please improve
+function mousePressed() { //places notes
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
 
-  let offsetx = 0;
   let offsety = 0;
-  if (player.x < VISIBLE_GRID_SIZE.wf){
-    offsetx = VISIBLE_GRID_SIZE.wf-player.x;  
-  }
   if (player.y < VISIBLE_GRID_SIZE.hf){
     offsety = VISIBLE_GRID_SIZE.hf-player.y;
   }
   if (player.y >= beats -VISIBLE_GRID_SIZE.hf){
     offsety = beats-player.y-VISIBLE_GRID_SIZE.hc;
   }
-  if (player.x >= lanes -VISIBLE_GRID_SIZE.wf){
-    offsetx = lanes-player.x-VISIBLE_GRID_SIZE.wc;
-  }
-  x += player.x - VISIBLE_GRID_SIZE.wf + offsetx;
   y += player.y - VISIBLE_GRID_SIZE.hf + offsety;
 
   toggleCell(x, y);
@@ -99,13 +81,13 @@ function toggleCell(x, y) {
     if (grid[y][x] === 0) {
       grid[y][x] = 1;
     }
-    else if(grid[y][x] !== 0 && grid[y][x] !== PLAYER){
+    else if (grid[y][x] === 1) {
       grid[y][x] = 0;
     }
   }
 }
 
-function generateEmptyGrid(cols, rows) { //make an empty grid, handy for testing screensizes
+function generateEmptyGrid(cols, rows) { //makes an empty grid
   let emptyArray = [];
   for (let y = 0; y < rows; y++) {
     emptyArray.push([]);
@@ -113,53 +95,26 @@ function generateEmptyGrid(cols, rows) { //make an empty grid, handy for testing
       emptyArray[y].push(0);
     }
   }
-  emptyArray[player.y][player.x] = PLAYER;
   return emptyArray;
 }
 
-function movePlayer(x, y){ //moves the player
-  if (x < lanes && y < beats && x >=0 && y >= 0) { //this keeps it on the grid
-    let ontile = grid[y][x]; //remembers what tile the player is standing on
-    let oldX = player.x;
-    let oldY = player.y;
-
-    player.x = x;
+function movePlayer(y){ //moves the player
+  if (y < beats-VISIBLE_GRID_SIZE.hf && y >= VISIBLE_GRID_SIZE.hf) { //this keeps it on the grid
     player.y = y;
-
-    grid[player.y][player.x] = PLAYER;
-    grid[oldY][oldX] = player.ontile;
-    player.ontile = ontile;
   }
 }
 
 function displayVisGrid(){ //paints pretty pictures
   for (let y = 0; y < VISIBLE_GRID_SIZE.h; y++){
     for (let x = 0; x < VISIBLE_GRID_SIZE.w; x++){
-      let offsetx = 0;
-      let offsety = 0;
-      if (player.x < VISIBLE_GRID_SIZE.wf){
-        offsetx = VISIBLE_GRID_SIZE.wf-player.x;  //gonna need to do something about the miracle numbers
-      }
-      if (player.y < VISIBLE_GRID_SIZE.hf){
-        offsety = VISIBLE_GRID_SIZE.hf-player.y;
-      }
-      if (player.y >= beats -VISIBLE_GRID_SIZE.hf){
-        offsety = beats-player.y-VISIBLE_GRID_SIZE.hc;
-      }
-      if (player.x >= lanes -VISIBLE_GRID_SIZE.wf){
-        offsetx = lanes-player.x-VISIBLE_GRID_SIZE.wc;
-      }
 
-      if (grid[y+player.y-VISIBLE_GRID_SIZE.hf+offsety][x+player.x-VISIBLE_GRID_SIZE.wf+offsetx] === 1) {
+      if (grid[y+player.y-VISIBLE_GRID_SIZE.hf][x] === 1) {
         fill("black");
       }
-      else if (grid[y+player.y-VISIBLE_GRID_SIZE.hf+offsety][x+player.x-VISIBLE_GRID_SIZE.wf+offsetx] === 0){
+      else if (grid[y+player.y-VISIBLE_GRID_SIZE.hf][x] === 0){
         fill("white");
-      }
-      else if (grid[y+player.y-VISIBLE_GRID_SIZE.hf+offsety][x+player.x-VISIBLE_GRID_SIZE.wf+offsetx] === 9){
-        fill("green");
       }
       rect(x * cellSize, y * cellSize, cellSize);
     }
   }
-} //  ) *matches your unmatched parenthesis*
+}
