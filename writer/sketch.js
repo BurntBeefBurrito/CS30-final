@@ -1,18 +1,18 @@
 // Charting/mapping tool
 // Michael
 // Started 5/8/24
-//stealing a lot from "budgeterraria" and "why not" from my other repo
+//stole a lot from "budgeterraria" and "why not" from my other repo
 //recycled code yippee, why redo something I have already done before?
 
 let grid;
 let cellSize;
-const beats = 40; //how long the thing is
+const beats = 480; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
 const lanes = 4;
 const VISIBLE_GRID_SIZE = { //odd numbers strongly recommended
   w: 4, //width
   h: 12, //height
 };
-let state = "menu";
+let state = "so silly";
 let player = {
   y: 6,
 };
@@ -40,6 +40,7 @@ function draw() {
   else{
     background(35, 36, 80);
     displayVisGrid();
+    displayEverything();
   }
 }
 
@@ -55,7 +56,7 @@ function keyPressed() { //causes various things to happen when keys are pressed
     movePlayer(player.y + 1);
   }
   if (key === " " && state === "menu"){
-    state = "thing";
+    state = "pizza pretzel";
   }
 }
 
@@ -75,7 +76,7 @@ function mousePressed() { //places notes
   toggleCell(x, y);
 }
 
-function toggleCell(x, y) {
+function toggleCell(x, y) { //could modify this to accomodate different note types
   //toggle the cells type
   if (x < lanes && y < beats && x >=0 && y >= 0) {
     if (grid[y][x] === 0) {
@@ -104,7 +105,7 @@ function movePlayer(y){ //moves the player
   }
 }
 
-function displayVisGrid(){ //paints pretty pictures
+function displayVisGrid(){ //paints just a section of the notes
   for (let y = 0; y < VISIBLE_GRID_SIZE.h; y++){
     for (let x = 0; x < VISIBLE_GRID_SIZE.w; x++){
 
@@ -115,6 +116,24 @@ function displayVisGrid(){ //paints pretty pictures
         fill("white");
       }
       rect(x * cellSize, y * cellSize, cellSize);
+      
     }
   }
 }
+
+function displayEverything(){ //draws the entire map
+  for (let y = 0; y < beats; y++){
+    for (let x = 0; x < lanes; x++){
+      noStroke();
+      if (grid[y][x] === 1){
+        fill("black");
+      }
+      else if (grid[y][x] === 0){
+        fill("white");
+      }
+      rect(windowWidth - 80 + x * 20, y * windowHeight / (beats-1), 20);
+      noStroke();
+    }
+  }
+}
+
