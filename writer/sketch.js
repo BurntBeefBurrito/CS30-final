@@ -4,22 +4,24 @@
 //stole a lot from "budgeterraria" and "why not" from my other repo
 //recycled code yippee, why redo something I have already done before?
 
-let grid;
+let chart; //this is the magical table of yes theres a note there
 let cellSize;
 const beats = 480; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
+let bpm = 180;
+let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
 const VISIBLE_GRID_SIZE = { //odd numbers strongly recommended
   w: 4, //width
   h: 12, //height
 };
-let state = "so silly";
-let player = {
+let state = "paint";
+let player = { //gonna need to change this
   y: 6,
 };
 
-function setup() {
+function setup() { 
   createCanvas(windowWidth, windowHeight);
-  grid = generateEmptyGrid(lanes, beats);
+  chart = generateEmptyGrid(lanes, beats);
   noSmooth();
   VISIBLE_GRID_SIZE.hf = Math.floor(VISIBLE_GRID_SIZE.h/2); //height floor
   VISIBLE_GRID_SIZE.hc = Math.ceil(VISIBLE_GRID_SIZE.h/2); //height ceiling
@@ -37,26 +39,42 @@ function draw() {
     background(50);
     text("this is a mapping thing, made for my convenience not yours. But nonetheless, click stuff and use w and d to scroll up and down, also hit E to save ;)", windowWidth/2 - 350, windowHeight/2);
   }
-  else{
+  else if (state === "paint"){
     background(35, 36, 80);
     displayVisGrid();
     displayEverything();
+  }
+  else if (state === "test"){
+    background(51, 20, 71);
+    displayVisGrid();
+    displayEverything();
+    movePlayer(player.y + 1);
   }
 }
 
 function keyPressed() { //causes various things to happen when keys are pressed
 
   if (key === "e") { //clears
-    grid = generateEmptyGrid(lanes, beats);
-  }
-  if (key === "w") { //moves view up
-    movePlayer(player.y -1); 
-  }
-  if (key === "s") { //moves view down
-    movePlayer(player.y + 1);
+    chart = generateEmptyGrid(lanes, beats);
   }
   if (key === " " && state === "menu"){
-    state = "pizza pretzel";
+    state = "paint";
+  }
+  else if(key === " " && state === "paint"){
+    player.y = 6;
+    state = "test";
+  }
+  else if(key === " " && state === "test"){
+    state = "paint";
+  }
+}
+
+function mouseWheel(event) { //I effectively copied stuff from the p5js reference here
+  if (event.delta > 0){
+    movePlayer(player.y + 1);
+  }
+  else{
+    movePlayer(player.y - 1); 
   }
 }
 
@@ -68,7 +86,7 @@ function mousePressed() { //places notes
   if (player.y < VISIBLE_GRID_SIZE.hf){
     offsety = VISIBLE_GRID_SIZE.hf-player.y;
   }
-  if (player.y >= beats -VISIBLE_GRID_SIZE.hf){
+  if (player.y >= beats - VISIBLE_GRID_SIZE.hf){
     offsety = beats-player.y-VISIBLE_GRID_SIZE.hc;
   }
   y += player.y - VISIBLE_GRID_SIZE.hf + offsety;
@@ -79,11 +97,11 @@ function mousePressed() { //places notes
 function toggleCell(x, y) { //could modify this to accomodate different note types
   //toggle the cells type
   if (x < lanes && y < beats && x >=0 && y >= 0) {
-    if (grid[y][x] === 0) {
-      grid[y][x] = 1;
+    if (chart[y][x] === 0) {
+      chart[y][x] = 1;
     }
-    else if (grid[y][x] === 1) {
-      grid[y][x] = 0;
+    else if (chart[y][x] === 1) {
+      chart[y][x] = 0;
     }
   }
 }
@@ -109,10 +127,10 @@ function displayVisGrid(){ //paints just a section of the notes
   for (let y = 0; y < VISIBLE_GRID_SIZE.h; y++){
     for (let x = 0; x < VISIBLE_GRID_SIZE.w; x++){
 
-      if (grid[y+player.y-VISIBLE_GRID_SIZE.hf][x] === 1) {
+      if (chart[y+player.y-VISIBLE_GRID_SIZE.hf][x] === 1) {
         fill("black");
       }
-      else if (grid[y+player.y-VISIBLE_GRID_SIZE.hf][x] === 0){
+      else if (chart[y+player.y-VISIBLE_GRID_SIZE.hf][x] === 0){
         fill("white");
       }
       rect(x * cellSize, y * cellSize, cellSize);
@@ -121,14 +139,14 @@ function displayVisGrid(){ //paints just a section of the notes
   }
 }
 
-function displayEverything(){ //draws the entire map
+function displayEverything(){ //draws the entire map, "everything" here means every note in the full map, not everything everything
   for (let y = 0; y < beats; y++){
     for (let x = 0; x < lanes; x++){
       noStroke();
-      if (grid[y][x] === 1){
+      if (chart[y][x] === 1){
         fill("black");
       }
-      else if (grid[y][x] === 0){
+      else if (chart[y][x] === 0){
         fill("white");
       }
       rect(windowWidth - 80 + x * 20, y * windowHeight / (beats-1), 20);
@@ -137,3 +155,5 @@ function displayEverything(){ //draws the entire map
   }
 }
 
+//todo: make it sync with audio, slow down autoscroll to match bpm, add visual simulation for notes, PICK MUSIC, improve rightside fullmap view
+//after that I can work on the main thing and maps
