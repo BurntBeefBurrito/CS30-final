@@ -7,7 +7,8 @@
 let chart; //this is the magical table of yes theres a note there
 let cellSize;
 const beats = 480; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
-let bpm = 180;
+let bpm = 60;
+let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
 const VISIBLE_GRID_SIZE = { //odd numbers strongly recommended
@@ -25,6 +26,7 @@ function setup() {
   noSmooth();
   VISIBLE_GRID_SIZE.hf = Math.floor(VISIBLE_GRID_SIZE.h/2); //height floor
   VISIBLE_GRID_SIZE.hc = Math.ceil(VISIBLE_GRID_SIZE.h/2); //height ceiling
+  frameRate(60);
 }
 
 function draw() {
@@ -37,7 +39,7 @@ function draw() {
   }
   if (state === "menu"){
     background(50);
-    text("this is a mapping thing, made for my convenience not yours. But nonetheless, click stuff and use w and d to scroll up and down, also hit E to save ;)", windowWidth/2 - 350, windowHeight/2);
+    text("this is made for my convenience not yours. Regardless, click stuff and use scrollwheel, also hit E to save ;)", windowWidth/2 - 350, windowHeight/2);
   }
   else if (state === "paint"){
     background(35, 36, 80);
@@ -48,7 +50,7 @@ function draw() {
     background(51, 20, 71);
     displayVisGrid();
     displayEverything();
-    movePlayer(player.y + 1);
+    rabbit();
   }
 }
 
@@ -153,7 +155,18 @@ function displayEverything(){ //draws the entire map, "everything" here means ev
       noStroke();
     }
   }
+  fill("blue"); //this is the scrollbar (nonclickable), probably tastes like pasta tho
+  rect(windowWidth - 85, player.y * windowHeight / (beats-1) - windowHeight/beats*6, 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
 }
 
-//todo: make it sync with audio, slow down autoscroll to match bpm, add visual simulation for notes, PICK MUSIC, improve rightside fullmap view
+function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
+
+  if (millis() - lastUpdate >= 1000/(bpm/60)){
+    movePlayer(player.y + 1);
+    lastUpdate = millis();
+  }
+}
+
+//todo: make it sync with audio, add visual simulation for notes, PICK MUSIC
 //after that I can work on the main thing and maps
+//learn about promises and callbacks
