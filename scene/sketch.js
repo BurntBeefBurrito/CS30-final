@@ -26,8 +26,6 @@ let offsetx; //how offset are the lanes and things? This will be used for silly 
 let spacing; //how spaced are the lanes?
 
 //                              THINGS TO DO (short term)
-//                              make map reading/writing method
-//                              make custom sprites/textures
 //                              choose music (dont infringe copyright, even though this isnt being monetized)
 //                              make everything operate on a millis clock?
 //                              if you wanna load a JSON file, do it almost like an image, eg file = loadJSON("file.json");

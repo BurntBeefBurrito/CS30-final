@@ -6,12 +6,12 @@
 
 let chart; //this is the magical table of yes theres a note there
 let cellSize;
-const beats = 480; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
-let bpm = 60;
+const beats = 80; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
+let bpm = 240;
 let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
-const VISIBLE_GRID_SIZE = { //odd numbers strongly recommended
+const VISIBLE_GRID_SIZE = { //keep it at 4
   w: 4, //width
   h: 12, //height
 };
@@ -169,4 +169,7 @@ function rabbit(){ //the function being named this is a reference to marathon pa
 
 //todo: make it sync with audio, add visual simulation for notes, PICK MUSIC
 //after that I can work on the main thing and maps
-//learn about promises and callbacks
+//learn about promises and callbacks? p5party?
+
+//to play sounds do soundFile.play(delay if needed); and to stop it do soundFile.stop();
+//gonna have to do a multi prep-beat thing
