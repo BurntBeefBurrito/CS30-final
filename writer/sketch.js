@@ -6,8 +6,8 @@
 
 let chart; //this is the magical table of yes theres a note there
 let cellSize;
-const beats = 80; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
-let bpm = 240;
+const beats = 278; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
+let bpm = 278; //am I sure melody salad is 278 bpm?
 let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
@@ -19,6 +19,13 @@ let state = "paint";
 let player = { //gonna need to change this
   y: 6,
 };
+let skyFortress, melodySalad, isolation; //these are the songs
+
+function preload(){
+  //skyFortress = loadSound("audio/Sky Fortress.mp3");
+  //isolation = loadSound("audio/Isolation.mp3");
+  melodySalad = loadSound("audio/Melody Salad.mp3");
+}
 
 function setup() { 
   createCanvas(windowWidth, windowHeight);
@@ -65,14 +72,16 @@ function keyPressed() { //causes various things to happen when keys are pressed
   else if(key === " " && state === "paint"){
     player.y = 6;
     state = "test";
+    melodySalad.play();
   }
   else if(key === " " && state === "test"){
     state = "paint";
+    melodySalad.stop();
   }
 }
 
-function mouseWheel(event) { //I effectively copied stuff from the p5js reference here
-  if (event.delta > 0){
+function mouseWheel(event) { //I effectively copied stuff from the p5js reference here since I hadnt played with the scrollwheel
+  if (event.delta >= 0){
     movePlayer(player.y + 1);
   }
   else{
@@ -173,3 +182,4 @@ function rabbit(){ //the function being named this is a reference to marathon pa
 
 //to play sounds do soundFile.play(delay if needed); and to stop it do soundFile.stop();
 //gonna have to do a multi prep-beat thing
+//WEBGL

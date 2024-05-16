@@ -130,4 +130,4 @@ function spawnNote() { //gonna need to put stuff in the brackets in the future
 
   };
   noteTraits.push(tempNote);
-}
+} //gonna need to switch this to webgl so that I can rotate stuff :)
