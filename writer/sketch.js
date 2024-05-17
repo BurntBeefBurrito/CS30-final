@@ -6,8 +6,8 @@
 
 let chart; //this is the magical table of yes theres a note there
 let cellSize;
-const beats = 278; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
-let bpm = 278; //am I sure melody salad is 278 bpm?
+const beats = 600; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
+let bpm = 164; //am I sure melody salad is 278 bpm?
 let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
@@ -22,9 +22,9 @@ let player = { //gonna need to change this
 let skyFortress, melodySalad, isolation; //these are the songs
 
 function preload(){
-  //skyFortress = loadSound("audio/Sky Fortress.mp3");
+  skyFortress = loadSound("audio/Sky Fortress.mp3");
   //isolation = loadSound("audio/Isolation.mp3");
-  melodySalad = loadSound("audio/Melody Salad.mp3");
+  //melodySalad = loadSound("audio/Melody Salad.mp3");
 }
 
 function setup() { 
@@ -72,11 +72,15 @@ function keyPressed() { //causes various things to happen when keys are pressed
   else if(key === " " && state === "paint"){
     player.y = 6;
     state = "test";
-    melodySalad.play();
+    skyFortress.play(0, 0, 100, 0);
+  }
+  else if(key === "k" && state === "paint"){
+    state = "test";
+    skyFortress.play(0, 0, 100, player.y*(60/bpm)-6); //gonna edit this to start at the hovered section
   }
   else if(key === " " && state === "test"){
     state = "paint";
-    melodySalad.stop();
+    skyFortress.stop();
   }
 }
 
