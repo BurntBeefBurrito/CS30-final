@@ -7,7 +7,7 @@
 let chart; //this is the magical table of yes theres a note there
 let cellSize;
 const beats = 600; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
-let bpm = 164; //am I sure melody salad is 278 bpm?
+let bpm = 125; //am I sure melody salad is 278 bpm?
 let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
@@ -17,14 +17,15 @@ const VISIBLE_GRID_SIZE = { //keep it at 4
 };
 let state = "paint";
 let player = { //gonna need to change this
-  y: 6,
+  y: 0,
 };
-let skyFortress, melodySalad, isolation; //these are the songs
+let skyFortress, melodySalad, isolation, beGone; //these are the songs
 
 function preload(){
   skyFortress = loadSound("audio/Sky Fortress.mp3");
   //isolation = loadSound("audio/Isolation.mp3");
   //melodySalad = loadSound("audio/Melody Salad.mp3");
+  beGone = loadSound("audio/You'll Be Gone.mp3");
 }
 
 function setup() { 
@@ -72,15 +73,15 @@ function keyPressed() { //causes various things to happen when keys are pressed
   else if(key === " " && state === "paint"){
     player.y = 6;
     state = "test";
-    skyFortress.play(0, 0, 100, 0);
+    beGone.play(); //sounds a bit fuzzy?
   }
   else if(key === "k" && state === "paint"){
     state = "test";
-    skyFortress.play(0, 0, 100, player.y*(60/bpm)-6); //gonna edit this to start at the hovered section
-  }
+    beGone.play(0, 0, 100, (bpm/60)); //gonna edit this to start at the hovered section
+  } //seconds, each tile is bpm/60th of a second   125/60
   else if(key === " " && state === "test"){
     state = "paint";
-    skyFortress.stop();
+    beGone.stop();
   }
 }
 
@@ -98,8 +99,8 @@ function mousePressed() { //places notes
   let y = Math.floor(mouseY/cellSize);
 
   let offsety = 0;
-  if (player.y < VISIBLE_GRID_SIZE.hf){
-    offsety = VISIBLE_GRID_SIZE.hf-player.y;
+  if (player.y < VISIBLE_GRID_SIZE.h){
+    offsety = VISIBLE_GRID_SIZE.hf;
   }
   if (player.y >= beats - VISIBLE_GRID_SIZE.hf){
     offsety = beats-player.y-VISIBLE_GRID_SIZE.hc;
@@ -133,7 +134,7 @@ function generateEmptyGrid(cols, rows) { //makes an empty grid
 }
 
 function movePlayer(y){ //moves the player
-  if (y < beats-VISIBLE_GRID_SIZE.hf && y >= VISIBLE_GRID_SIZE.hf) { //this keeps it on the grid
+  if (y < beats-VISIBLE_GRID_SIZE.hf && y >= 0) { //this keeps it on the grid
     player.y = y;
   }
 }
@@ -142,10 +143,10 @@ function displayVisGrid(){ //paints just a section of the notes
   for (let y = 0; y < VISIBLE_GRID_SIZE.h; y++){
     for (let x = 0; x < VISIBLE_GRID_SIZE.w; x++){
 
-      if (chart[y+player.y-VISIBLE_GRID_SIZE.hf][x] === 1) {
+      if (chart[y+player.y][x] === 1) {
         fill("black");
       }
-      else if (chart[y+player.y-VISIBLE_GRID_SIZE.hf][x] === 0){
+      else if (chart[y+player.y][x] === 0){
         fill("white");
       }
       rect(x * cellSize, y * cellSize, cellSize);
@@ -180,10 +181,10 @@ function rabbit(){ //the function being named this is a reference to marathon pa
   }
 }
 
-//todo: make it sync with audio, add visual simulation for notes, PICK MUSIC
+//todo: make it sync with audio, add visual simulation for notes, make playback mid song work properly
 //after that I can work on the main thing and maps
 //learn about promises and callbacks? p5party?
 
 //to play sounds do soundFile.play(delay if needed); and to stop it do soundFile.stop();
 //gonna have to do a multi prep-beat thing
-//WEBGL
+//WEBGL has 0, 0 at the middle like scratch
