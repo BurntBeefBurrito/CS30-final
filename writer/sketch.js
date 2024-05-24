@@ -77,7 +77,7 @@ function keyPressed() { //causes various things to happen when keys are pressed
   }
   else if(key === "k" && state === "paint"){
     state = "test";
-    beGone.play(0, 0, 100, (bpm/60)); //gonna edit this to start at the hovered section
+    beGone.play(0, 0, 100, bpm/60); //gonna edit this to start at the hovered section
   } //seconds, each tile is bpm/60th of a second   125/60
   else if(key === " " && state === "test"){
     state = "paint";
@@ -170,11 +170,10 @@ function displayEverything(){ //draws the entire map, "everything" here means ev
     }
   }
   fill("blue"); //this is the scrollbar (nonclickable), probably tastes like pasta tho
-  rect(windowWidth - 85, player.y * windowHeight / (beats-1) - windowHeight/beats*6, 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
+  rect(windowWidth - 85, (player.y+1) * windowHeight / beats - windowHeight/beats, 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
 }
 
 function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
-
   if (millis() - lastUpdate >= 1000/(bpm/60)){
     movePlayer(player.y + 1);
     lastUpdate = millis();
