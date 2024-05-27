@@ -109,7 +109,7 @@ function keyPressed(){ //this deletes notes around a bumper when its pressed, on
   }
 }
 
-function arrowMan(){ //this is an all you can eat buffet for note management
+function arrowMan(){ //this is an all you can eat buffet for note management, gonna rewrite this
   for(let note of noteTraits){ 
     image(boom, windowWidth/2-spacing/2 + spacing / lanes * note.lane + offsetx + spacing/2/lanes, note.distance, 90, 90); //draws notes
     note.distance += note.speed; //moves notes

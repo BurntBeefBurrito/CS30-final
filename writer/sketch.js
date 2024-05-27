@@ -22,10 +22,10 @@ let player = { //gonna need to change this
 let skyFortress, melodySalad, isolation, beGone; //these are the songs
 
 function preload(){
-  skyFortress = loadSound("audio/Sky Fortress.mp3");
+  //skyFortress = loadSound("audio/Sky Fortress.mp3");
   //isolation = loadSound("audio/Isolation.mp3");
   //melodySalad = loadSound("audio/Melody Salad.mp3");
-  beGone = loadSound("audio/You'll Be Gone.mp3");
+  beGone = loadSound("audio/You'll Be Gone.mp3"); //gonna remove this eventually altogether
 }
 
 function setup() { 
@@ -70,14 +70,14 @@ function keyPressed() { //causes various things to happen when keys are pressed
   if (key === " " && state === "menu"){
     state = "paint";
   }
-  else if(key === " " && state === "paint"){
-    player.y = 6;
+  else if(key === " " && state === "paint"){ //start at start
+    player.y = 0;
     state = "test";
     beGone.play(); //sounds a bit fuzzy?
   }
-  else if(key === "k" && state === "paint"){
+  else if(key === "k" && state === "paint"){ //start at hovered area
     state = "test";
-    beGone.play(0, 0, 100, bpm/60); //gonna edit this to start at the hovered section
+    beGone.play(0, 0, 100, 60/bpm * player.y);
   } //seconds, each tile is bpm/60th of a second   125/60
   else if(key === " " && state === "test"){
     state = "paint";
@@ -180,11 +180,14 @@ function rabbit(){ //the function being named this is a reference to marathon pa
   }
 }
 
-//todo: make it sync with audio, add visual simulation for notes, make playback mid song work properly
-//
+
+//THINGS I NEED TO DO
+//make it sync with audio, add visual simulation for notes, make playback mid song work properly
 //after that I can work on the main thing and maps
 //learn about promises and callbacks? p5party?
-
-//to play sounds do soundFile.play(delay if needed); and to stop it do soundFile.stop();
-//gonna have to do a multi prep-beat thing
+//gonna have to do a multi prep-beat thing for the game itself
 //WEBGL has 0, 0 at the middle like scratch
+//find chiller music for a tutorial lol but not smth boring, I dont want the notation to feel watered down
+//abandon yon
+//find/make hit sounds
+//
