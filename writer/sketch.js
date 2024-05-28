@@ -7,7 +7,7 @@
 let chart; //this is the magical table of yes theres a note there
 let cellSize;
 const beats = 120; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
-let bpm = 125; //am I sure melody salad is 278 bpm?
+let bpm = 250; //am I sure melody salad is 278 bpm?
 let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
@@ -19,6 +19,7 @@ let state = "paint";
 let player = { //gonna need to change this
   y: 0,
 };
+let liveNotes = []; //these are the spawned notes
 let skyFortress, melodySalad, isolation, beGone; //these are the songs
 
 function preload(){
@@ -59,6 +60,7 @@ function draw() {
     displayVisGrid();
     displayEverything();
     rabbit();
+    arrowMan();
   }
 }
 
@@ -81,6 +83,7 @@ function keyPressed() { //causes various things to happen when keys are pressed
   } //seconds, each tile is bpm/60th of a second   125/60
   else if(key === " " && state === "test"){
     state = "paint";
+    liveNotes = [];
     beGone.stop();
   }
 }
@@ -175,8 +178,31 @@ function displayEverything(){ //draws the entire map, "everything" here means ev
 
 function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
   if (millis() - lastUpdate >= 1000/(bpm/60)){
+    translator();
     movePlayer(player.y + 1);
     lastUpdate = millis();
+  }
+}
+
+function translator(){ //turns notes from the map into live notes
+  for(let x = 0; x < lanes; x++){ //gonna change these to nicer numbers which arent magical
+    if(chart[player.y][x] !== 0){
+      let tempNote = {
+        speed: 6, //what kinda math do I do here? I want notespeed to scale with bpm and by extension difficulty
+        lane: x,
+        distance: 0,
+      };
+      liveNotes.push(tempNote);
+    }
+
+  }
+}
+
+function arrowMan(){ //somewhat different than the arrowman in scene, will have to change scene arrowman
+  for(let note of liveNotes){
+    fill("white");
+    rect(windowWidth/2-120 + 240 / lanes * note.lane + 240/2/lanes, note.distance, 60, 60);
+    note.distance += note.speed;
   }
 }
 
@@ -190,4 +216,4 @@ function rabbit(){ //the function being named this is a reference to marathon pa
 //find chiller music for a tutorial lol but not smth boring, I dont want the notation to feel watered down
 //abandon yon
 //find/make hit sounds
-//
+//IT SPINS AND NEVER STOPS
