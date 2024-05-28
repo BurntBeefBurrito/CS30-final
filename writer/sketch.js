@@ -4,7 +4,7 @@
 //stole a lot from "budgeterraria" and "why not" from my other repo
 //recycled code yippee, why redo something I have already done before?
 
-let chart; //this is the magical table of yes theres a note there
+let chart; //this is the magical table of yes theres a note there not to be confused with livenotes which tracks active notes with information
 let cellSize;
 const beats = 120; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
 let bpm = 250; //am I sure melody salad is 278 bpm?
