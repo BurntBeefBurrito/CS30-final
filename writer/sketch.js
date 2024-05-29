@@ -8,6 +8,7 @@ let chart; //this is the magical table of yes theres a note there not to be conf
 let cellSize;
 const beats = 120; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
 let bpm = 250; //am I sure melody salad is 278 bpm?
+let trueBpm = 125; //this is the actual bpm of the song, not the functional one
 let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
@@ -188,7 +189,7 @@ function translator(){ //turns notes from the map into live notes
   for(let x = 0; x < lanes; x++){ //gonna change these to nicer numbers which arent magical
     if(chart[player.y][x] !== 0){
       let tempNote = {
-        speed: 6, //what kinda math do I do here? I want notespeed to scale with bpm and by extension difficulty
+        speed: bpm/40, //tinker w this math
         lane: x,
         distance: 0,
       };
@@ -214,6 +215,6 @@ function arrowMan(){ //somewhat different than the arrowman in scene, will have 
 //gonna have to do a multi prep-beat thing for the game itself
 //WEBGL has 0, 0 at the middle like scratch
 //find chiller music for a tutorial lol but not smth boring, I dont want the notation to feel watered down
-//abandon yon
+//abandon yon, dig through waterflame and camellia music?
 //find/make hit sounds
 //IT SPINS AND NEVER STOPS
