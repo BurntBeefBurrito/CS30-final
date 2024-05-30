@@ -7,7 +7,7 @@
 let chart; //this is the magical table of yes theres a note there not to be confused with livenotes which tracks active notes with information
 let cellSize;
 const beats = 120; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
-let bpm = 250; //am I sure melody salad is 278 bpm?
+let bpm = 500; //am I sure melody salad is 278 bpm?
 let trueBpm = 125; //this is the actual bpm of the song, not the functional one
 let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
@@ -189,20 +189,22 @@ function translator(){ //turns notes from the map into live notes
   for(let x = 0; x < lanes; x++){ //gonna change these to nicer numbers which arent magical
     if(chart[player.y][x] !== 0){
       let tempNote = {
-        speed: bpm/40, //tinker w this math
+        speed: bpm/30, //tinker w this math
         lane: x,
         distance: 0,
       };
       liveNotes.push(tempNote);
     }
 
-  }
+  } //lets say it needs to travel 800 pix over 8 beats (800 will be switched for dist to arrows)
+  // 800/number of required frames to get there
+  //
 }
 
 function arrowMan(){ //somewhat different than the arrowman in scene, will have to change scene arrowman
-  for(let note of liveNotes){
+  for(let note of liveNotes){ //change this to be read backwards, so that newer notes are behind old ones
     fill("white");
-    rect(windowWidth/2-120 + 240 / lanes * note.lane + 240/2/lanes, note.distance, 60, 60);
+    rect(windowWidth/2-120 + 240 / lanes * note.lane + 120/lanes, note.distance, 60, 60);
     note.distance += note.speed;
   }
 }
@@ -213,8 +215,9 @@ function arrowMan(){ //somewhat different than the arrowman in scene, will have 
 //after that I can work on the main thing and maps
 //learn about promises and callbacks? p5party?
 //gonna have to do a multi prep-beat thing for the game itself
-//WEBGL has 0, 0 at the middle like scratch
+//WEBGL has 0, 0 at the middle like scratch. Use it if implementing eye candy
 //find chiller music for a tutorial lol but not smth boring, I dont want the notation to feel watered down
 //abandon yon, dig through waterflame and camellia music?
 //find/make hit sounds
 //IT SPINS AND NEVER STOPS
+//implement game of life for a joke map?
