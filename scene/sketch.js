@@ -25,17 +25,17 @@ let binds; //keybindings the user presses
 let offsetx; //how offset are the lanes and things? This will be used for silly mechanics when i get around to them
 let spacing; //how spaced are the lanes?
 
-//                              THINGS TO DO (task amogus)
-//                              if you wanna load a JSON file, do it almost like an image, eg file = loadJSON("file.json");
-//                              add basic UI, for song selection for instance,  might write in an additional file
-//                              rewrite stuff to work w inputted maps
-//                              adjust notespeed to match writer
-//                              COPY PASTE COPY PASTE from writer
-//                              get song info in seperate folders for convenience (song, coverart, chart, bumf)
-//                                  for example, itll look like maps/isolation/chart.JSON
-//                              then make the thing check for all the folders in maps, rather than predetermined ones
-//                              make it look presentable
-//                              THINK OF A COOL NAME PLRSAASSE
+//THINGS TO DO (task amogus)
+//if you wanna load a JSON file, do it almost like an image, eg file = loadJSON("file.json");
+//add basic UI, for song selection for instance,  might write in an additional file
+//rewrite stuff to work w inputted maps
+//adjust notespeed to match writer
+//COPY PASTE COPY PASTE from writer
+//get song info in seperate folders for convenience (song, coverart, chart, bumf)
+//for example, itll look like maps/isolation/chart.JSON
+//then make the thing check for all the folders in maps, rather than predetermined ones
+//make it look presentable
+//Calling it SASS
 
 //picture heaven
 function preload(){

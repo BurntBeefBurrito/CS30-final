@@ -217,7 +217,7 @@ function arrowMan(){ //somewhat different than the arrowman in scene, will have 
 //gonna have to do a multi prep-beat thing for the game itself
 //WEBGL has 0, 0 at the middle like scratch. Use it if implementing eye candy
 //find chiller music for a tutorial lol but not smth boring, I dont want the notation to feel watered down
-//abandon yon, dig through waterflame and camellia music?
+//abandon yon, dig through waterflame and camellia music? SASS
 //find/make hit sounds
-//IT SPINS AND NEVER STOPS
+//im gonna add such a silly song (SASS) as an easter egg
 //implement game of life for a joke map?
