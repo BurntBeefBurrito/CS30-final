@@ -173,8 +173,8 @@ function displayEverything(){ //draws the entire map, "everything" here means ev
       noStroke();
     }
   }
-  fill("blue"); //this is the scrollbar (nonclickable), probably tastes like pasta tho
-  rect(windowWidth - 85, (player.y+1) * windowHeight / beats - windowHeight/beats, 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
+  fill("blue"); //this is the scrollbar (nonclickable), math probably tastes like pasta tho
+  rect(windowWidth - 85, (player.y+1) * (windowHeight/beats - windowHeight/beats), 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
 }
 
 function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
@@ -201,11 +201,11 @@ function translator(){ //turns notes from the map into live notes
   //
 }
 
-function arrowMan(){ //somewhat different than the arrowman in scene, will have to change scene arrowman
-  for(let note of liveNotes){ //change this to be read backwards, so that newer notes are behind old ones
+function arrowMan(){ //different than the arrowman in scene, will have to change scene arrowman
+  for(let i = liveNotes.length-1; i > 0; i--){ //rewrote it to be read backwards
     fill("white");
-    rect(windowWidth/2-120 + 240 / lanes * note.lane + 120/lanes, note.distance, 60, 60);
-    note.distance += note.speed;
+    rect(windowWidth/2-120 + 240 / lanes * liveNotes[i].lane + 120/lanes, liveNotes[i].distance, 60, 60);
+    liveNotes[i].distance += liveNotes[i].speed;
   }
 }
 
@@ -213,11 +213,12 @@ function arrowMan(){ //somewhat different than the arrowman in scene, will have 
 //THINGS I NEED TO DO
 //make it sync with audio, add visual simulation for notes, make playback mid song work properly
 //after that I can work on the main thing and maps
-//learn about promises and callbacks? p5party?
+//learn about promises and callbacks? p5party? Also eval?
 //gonna have to do a multi prep-beat thing for the game itself
 //WEBGL has 0, 0 at the middle like scratch. Use it if implementing eye candy
-//find chiller music for a tutorial lol but not smth boring, I dont want the notation to feel watered down
+//find chiller music for a tutorial lol but not smth boring, I dont want the notation to feel watered down (NCS candyland?)
 //abandon yon, dig through waterflame and camellia music? SASS
 //find/make hit sounds
-//im gonna add such a silly song (SASS) as an easter egg
+//im gonna add such a silly song (SASS) as an easter egg (if time permits)
 //implement game of life for a joke map?
+//get betatest help from someone who doesnt do compsci, and someone who does
