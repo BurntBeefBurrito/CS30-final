@@ -189,7 +189,7 @@ function translator(){ //turns notes from the map into live notes
   for(let x = 0; x < lanes; x++){ //gonna change these to nicer numbers which arent magical
     if(chart[player.y][x] !== 0){
       let tempNote = {
-        speed: bpm/30, //tinker w this math
+        speed: 10, //im so lost
         lane: x,
         distance: 0,
       };
