@@ -1,9 +1,6 @@
 // Rhythm Heaven't
 // Michael Gorylev
 // 3/27/24
-//        offset text
-// Extra for Experts:
-// - I used arrays before they were introduced (3/11/24)
 
 //temporary sprites were taken from https://phighting.fandom.com/wiki/Stickers
 
@@ -17,8 +14,14 @@ let noteSpeed; //how fast the notes go zoom, measured in pixels per frame
 let tempNote; //this is to make coding new notes easier ig
 let noteTraits = []; //the updated lane and distance array
 
+//variables in regards to mapchoosing
+let hoveredMap; //which of the maps is being hovered
+let maps; //list of all the internal map names, used to access the map folders
+let artTest;
+
 //misc variables
 let state; // is it in a menu, or playing?
+let subState; //what menu is it in, or is the map paused? May bake into state if it seems right
 let binds; //keybindings the user presses
 
 //visual variables, will probably be baked together into a single object or smth
@@ -43,20 +46,23 @@ function preload(){
   bumperImage = loadImage("images/Slingshotwoah.jpg");
   boom = loadImage("images/Boomboxgg.jpg");
   bumperDownImage = loadImage("images/SlingshotGoodJob.jpg");
+  artTest = loadImage("maps/isolation/art.png"); //how will I load an image/make a variable for every item in a list?
 }
 
 function setup() {
   angleMode(DEGREES);
   lanes = 4;
   createCanvas(windowWidth, windowHeight);
-  state = "play";
+  state = "menu";
+  subState = "main";
+  maps = ["skyFortress", "isolaton", "melodySalad"];
   binds = [68, 70, 74, 75, 83, 76];
   accuracy = 80;
   noteSpeed = 6;
   offsetx = 0;
   spacing = 240; //use 240
   imageMode(CENTER);
-
+  rectMode(CENTER);
 }
 
 function draw() {
@@ -64,17 +70,28 @@ function draw() {
   if (state === "play"){
     playing();
   }
-  // if (state === "menu"){
-  //   menu();
-  // } 
+  if (state === "menu"){
+    menuMan();
+  } 
 }
 
-// function menu(){ ...its a menu... this definititely will need branching out into more stuff
-//   text("This is a very high budget menu. hit left click to play the thing", windowWidth/2 - 150, windowHeight/2);
-//   if (mouseIsPressed){
-//     state = "play";
-//   }
-// }
+function menuMan(){ //...its a menu manager... 
+  if(subState === "main"){
+    mainMenu();
+  }
+  else if (subState === "mapSelect"){
+    mapSelectMenu();
+  }
+  else if (subState === "settings"){
+    settingsMenu();
+  }
+  else if (subState === "credits"){
+    creditsMenu();
+  }
+  else{ //no idea if this will do anything, but I want to 
+    subState === "main";
+  }
+}
 
 function playing(){ //this manages other functions while playing the game
   bumperMan();
@@ -106,10 +123,10 @@ function keyPressed(){ //this deletes notes around a bumper when its pressed, on
 
       for(let possibleNotes = 0; possibleNotes < noteTraits.length; possibleNotes++){ 
 
-        if (noteTraits[possibleNotes].distance >= windowHeight*0.9 - accuracy && noteTraits[possibleNotes].distance 
+        if (noteTraits[possibleNotes].distance >= windowHeight*0.9 - accuracy && noteTraits[possibleNotes].distance //checks each note to kill idfk wrote it a millenia ago
           <= windowHeight*0.9 + accuracy && noteTraits[possibleNotes].lane === q){
           noteTraits.splice(possibleNotes, 1);
-          possibleNotes = noteTraits.length+40;
+          possibleNotes = noteTraits.length + 40;
         }
       }
     }
@@ -129,7 +146,7 @@ function arrowMan(){ //this is an all you can eat buffet for note management, go
   }
 }
 
-function spawnNote() { //gonna need to put stuff in the brackets in the future
+function spawnNote(){ //gonna need to put stuff in the brackets in the future
   let tempNote = {
     speed: noteSpeed,
     lane: round(random(0, lanes-1)),
@@ -138,3 +155,28 @@ function spawnNote() { //gonna need to put stuff in the brackets in the future
   };
   noteTraits.push(tempNote);
 } //gonna need to switch this to webgl so that I can rotate stuff :)
+
+function mainMenu(){ //the menuMenu
+  text("High budget menu. Left click for map select", windowWidth/2 - 150, windowHeight/2);
+  if (mouseIsPressed){
+    subState = "mapSelect";
+  }
+}
+
+function mapSelectMenu(){ //mmm choices
+  text("map placeholder", windowWidth/2 - 150, windowHeight/2);
+  for (let i = 0; i < maps.length; i++){
+    image(artTest, windowWidth/2 + i * 150, windowHeight/2, 100, 100);
+  }
+  // if (mouseIsPressed){
+  //   state = "play";
+  // }
+}
+
+function settingsMenu(){ //I cant wait for this to go unused and undeleted along with creditsMenu
+  text("settings placeholder", windowWidth/2 - 150, windowHeight/2);
+}
+
+function creditsMenu(){ //gotta thank people
+  text("credit placeholder", windowWidth/2 - 150, windowHeight/2);
+}

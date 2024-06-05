@@ -6,7 +6,7 @@ I want to polish the original rhythm game scraps that I made (scene in my origin
 
 ## Needs to have
 - music
-- charts/maps for notes
+- charts/maps for notes 
   - I do not want randomized note spawns as they would be incredibly unfun in my opinion
 - two songs and associated charts
   - this is core to gameplay

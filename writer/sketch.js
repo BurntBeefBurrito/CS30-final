@@ -222,3 +222,4 @@ function arrowMan(){ //different than the arrowman in scene, will have to change
 //im gonna add such a silly song (SASS) as an easter egg (if time permits)
 //implement game of life for a joke map?
 //get betatest help from someone who doesnt do compsci, and someone who does
+//man I'm just lost in thinking about my other idea for a game, but it wouldnt work out in JS :(
