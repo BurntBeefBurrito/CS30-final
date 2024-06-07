@@ -17,7 +17,7 @@ let noteTraits = []; //the updated lane and distance array
 //variables in regards to mapchoosing
 let hoveredMap; //which of the maps is being hovered
 let songs; //list of all the internal map names, used to access the map folders
-let mapData = {};
+let mapData = [];
 let artTest;
 
 //misc variables
@@ -57,12 +57,10 @@ function setup() {
   state = "menu";
   subState = "main";
   songs = ["skyFortress", "isolaton", "melodySalad"];
-  for (let thing in songs){
-    let coverArt = "";
+  for (let song in songs){
+    let coverArt = "loadImage(\"maps/" + songs[song] + "/art.png\")"; //use ur brain :P this wont work
     let tempMapInfo = {
-      coverArt: loadImage("maps/isolation/art.png"),
-      //gonna add specific map data in here
-      //along with the musician
+      coverArt: eval(coverArt), //eval is considered a risk :P
     };
 
     mapData.push(tempMapInfo);
@@ -177,12 +175,22 @@ function mainMenu(){ //the menuMenu
 function mapSelectMenu(){ //mmm choices
   text("map placeholder", windowWidth/2 - 150, windowHeight/2);
   for (let i = 0; i < songs.length; i++){
-    image(artTest, windowWidth/2 + i * 150, windowHeight/2, 100, 100);
+    let searchFor = songs[i];
+    image(mapData[searchFor]["coverArt"], windowWidth/2 + i * 150, windowHeight/2, 100, 100);
   }
   // if (mouseIsPressed){
   //   state = "play";
   // }
 }
+
+// function mouseWheel(event) { //this will come in handy :P
+//   if (event.delta >= 0){
+//     movePlayer(player.y + 1);
+//   }
+//   else{
+//     movePlayer(player.y - 1); 
+//   }
+// }
 
 function settingsMenu(){ //I cant wait for this to go unused and undeleted along with creditsMenu
   text("settings placeholder", windowWidth/2 - 150, windowHeight/2);

@@ -7,8 +7,8 @@
 let chart; //this is the magical table of yes theres a note there not to be confused with livenotes which tracks active notes with information
 let cellSize;
 const beats = 120; //how long the thing is... it hurts that im making incredibly long arrays, especially when offbeats are involved
-let bpm = 500; //am I sure melody salad is 278 bpm?
-let trueBpm = 125; //this is the actual bpm of the song, not the functional one
+let bpm = 480; //am I sure melody salad is 278 bpm?
+let trueBpm = 120; //this is the actual bpm of the song, not the functional one
 let lastUpdate = 0; //yay counting
 let multiplier = 1; //this will be used to account for the aforementioned offbeats later
 const lanes = 4;
@@ -173,9 +173,9 @@ function displayEverything(){ //draws the entire map, "everything" here means ev
       noStroke();
     }
   }
-  fill("blue"); //this is the scrollbar (nonclickable), math probably tastes like pasta tho
-  rect(windowWidth - 85, (player.y+1) * (windowHeight/beats - windowHeight/beats), 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
-}
+  fill("blue"); //this is the scrollbar (nonclickable)
+  rect(windowWidth - 85, player.y * (windowHeight/beats), 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
+} //close enough :shrug:
 
 function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
   if (millis() - lastUpdate >= 1000/(bpm/60)){
@@ -189,37 +189,30 @@ function translator(){ //turns notes from the map into live notes
   for(let x = 0; x < lanes; x++){ //may change these to nicer numbers which arent magical
     if(chart[player.y][x] !== 0){
       let tempNote = {
-        speed: 10, //im so lost
+        speed: windowHeight/(60/(trueBpm/60))/4,
         lane: x,
-        distance: 0,
-      };
-      liveNotes.push(tempNote);
+        distance: 0,  //distance it needs to travel / frames
+      };  //lets say 1 beat at 120 bpm at 60 fps one beat is 30 frames how do i know that? 
+      liveNotes.push(tempNote); //120 bpm === 2 bps, 60fps/ bps = 30
     }
-
-  } //lets say it needs to travel 800 pix over 8 beats (800 will be switched for dist to arrows)
-  // 800/number of required frames to get there
-  //
+  }
 }
 
 function arrowMan(){ //different than the arrowman in scene, will have to change scene arrowman
-  for(let i = liveNotes.length-1; i > 0; i--){ //rewrote it to be read backwards
+  for(let i = liveNotes.length-1; i >= 0; i--){ //rewrote it to be read backwards
     fill("white");
     rect(windowWidth/2-120 + 240 / lanes * liveNotes[i].lane + 120/lanes, liveNotes[i].distance, 60, 60);
     liveNotes[i].distance += liveNotes[i].speed;
   }
 }
 
-
 //THINGS I NEED TO DO
-//make it sync with audio, add visual simulation for notes, make playback mid song work properly
+//add visual simulation for notes, make playback mid song work properly
 //after that I can work on the main thing and maps
 //learn about promises and callbacks? p5party? Also eval?
 //gonna have to do a multi prep-beat thing for the game itself
 //WEBGL has 0, 0 at the middle like scratch. Use it if implementing eye candy
 //find chiller music for a tutorial lol but not smth boring, I dont want the notation to feel watered down (NCS candyland?)
 //abandon yon, dig through waterflame and camellia music? SASS
-//find/make hit sounds
-//im gonna add such a silly song (SASS) as an easter egg (if time permits)
 //implement game of life for a joke map?
 //get betatest help from someone who doesnt do compsci, and someone who does
-//man I'm just lost in thinking about my other idea for a game, but it wouldnt work out in JS :(
