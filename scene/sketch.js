@@ -56,12 +56,12 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   state = "menu";
   subState = "main";
-  songs = ["skyFortress", "isolaton", "melodySalad"];
+  songs = ["skyFortress", "isolation", "melodySalad"];
   for (let song in songs){
     let coverArt = "loadImage(\"maps/" + songs[song] + "/art.png\")"; //use ur brain :P this wont work
     let tempMapInfo = {
       coverArt: eval(coverArt), //eval is considered a risk :P
-    };
+    }; //do smth similar w/ the other map info, eg bpm and map itself
 
     mapData.push(tempMapInfo);
   }
@@ -69,6 +69,7 @@ function setup() {
   accuracy = 80;
   noteSpeed = 6;
   offsetx = 0;
+  hoveredMap = 0;
   spacing = 240; //use 240
   imageMode(CENTER);
   rectMode(CENTER);
@@ -163,7 +164,7 @@ function spawnNote(){ //gonna need to put stuff in the brackets in the future
 
   };
   noteTraits.push(tempNote);
-} //gonna need to switch this to webgl so that I can rotate stuff :)
+} //gonna need to switch this to webgl if I want to  rotate stuff :)
 
 function mainMenu(){ //the menuMenu
   text("High budget menu. Left click for map select", windowWidth/2 - 150, windowHeight/2);
@@ -174,23 +175,30 @@ function mainMenu(){ //the menuMenu
 
 function mapSelectMenu(){ //mmm choices
   text("map placeholder", windowWidth/2 - 150, windowHeight/2);
-  for (let i = 0; i < songs.length; i++){
-    let searchFor = songs[i];
-    image(mapData[searchFor]["coverArt"], windowWidth/2 + i * 150, windowHeight/2, 100, 100);
-  }
-  // if (mouseIsPressed){
-  //   state = "play";
+  // if(){
+
   // }
+  for(let i = 0; i < songs.length; i++){
+    image(mapData[i].coverArt, windowWidth/2 + i * 100 + 100 * hoveredMap, windowHeight/2, 100, 100); //cover art
+    
+  }
+  if (mouseIsPressed && mouseX > windowWidth/2 - 50 && mouseX < windowWidth/2 + 50 //spaghetti code for boxes :D
+  && mouseY > windowHeight / 2 - 50 && mouseY < windowHeight / 2 + 50){ 
+    state = "play";
+  }
 }
 
-// function mouseWheel(event) { //this will come in handy :P
-//   if (event.delta >= 0){
-//     movePlayer(player.y + 1);
-//   }
-//   else{
-//     movePlayer(player.y - 1); 
-//   }
-// }
+function mouseWheel(event) { //this will come in handy :P
+  if (state === "menu" && subState === "mapSelect"){
+    if (event.delta >= 0 && hoveredMap < songs.length-1){
+      hoveredMap += 1; 
+    }
+    else if (event.delta <= 0 && hoveredMap > 0){  //FIX THE LOGIC FOR THESE
+      hoveredMap -= 1;
+    }
+  }
+  
+}
 
 function settingsMenu(){ //I cant wait for this to go unused and undeleted along with creditsMenu
   text("settings placeholder", windowWidth/2 - 150, windowHeight/2);
@@ -198,4 +206,4 @@ function settingsMenu(){ //I cant wait for this to go unused and undeleted along
 
 function creditsMenu(){ //gotta thank people
   text("credit placeholder", windowWidth/2 - 150, windowHeight/2);
-}
+}                                                                        //create buttonMan???
