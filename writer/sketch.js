@@ -216,3 +216,4 @@ function arrowMan(){ //different than the arrowman in scene, will have to change
 //abandon yon, dig through waterflame and camellia music? SASS
 //implement game of life for a joke map?
 //get betatest help from someone who doesnt do compsci, and someone who does
+//for the final do all the quizzes, fancy object and non variable variable (object for example) stuff is something you should also be practicing
