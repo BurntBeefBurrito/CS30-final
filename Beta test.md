@@ -9,4 +9,7 @@ ask clowns and judge their judgement
 - ADVICE
 - BUGS
 
+##known issues:
+- screen resizing obliterates the thing
+
 ##Music?

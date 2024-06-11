@@ -175,14 +175,10 @@ function mainMenu(){ //the menuMenu
 
 function mapSelectMenu(){ //mmm choices
   text("map placeholder", windowWidth/2 - 150, windowHeight/2);
-  // if(){
-
-  // }
   for(let i = 0; i < songs.length; i++){
-    image(mapData[i].coverArt, windowWidth/2 + i * 100 + 100 * hoveredMap, windowHeight/2, 100, 100); //cover art
-    
+    image(mapData[i].coverArt, windowWidth/2 + i * 150 - 150 * hoveredMap -50, windowHeight/2, 100, 100); //cover art
   }
-  if (mouseIsPressed && mouseX > windowWidth/2 - 50 && mouseX < windowWidth/2 + 50 //spaghetti code for boxes :D
+  if (mouseIsPressed && mouseX > windowWidth/2 - 100 && mouseX < windowWidth/2 + 0 //spaghetti code for boxes :D
   && mouseY > windowHeight / 2 - 50 && mouseY < windowHeight / 2 + 50){ 
     state = "play";
   }
@@ -193,11 +189,13 @@ function mouseWheel(event) { //this will come in handy :P
     if (event.delta >= 0 && hoveredMap < songs.length-1){
       hoveredMap += 1; 
     }
-    else if (event.delta <= 0 && hoveredMap > 0){  //FIX THE LOGIC FOR THESE
+    else if (event.delta >= 0){
+      hoveredMap = 0;
+    }
+    else if (event.delta <= 0 && hoveredMap > 0){
       hoveredMap -= 1;
     }
   }
-  
 }
 
 function settingsMenu(){ //I cant wait for this to go unused and undeleted along with creditsMenu
