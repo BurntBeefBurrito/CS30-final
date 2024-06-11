@@ -26,7 +26,7 @@ function preload(){
   //skyFortress = loadSound("audio/Sky Fortress.mp3");
   //isolation = loadSound("audio/Isolation.mp3");
   //melodySalad = loadSound("audio/Melody Salad.mp3");
-  beGone = loadSound("audio/You'll Be Gone.mp3"); //gonna remove this eventually altogether
+  //beGone = loadSound("audio/You'll Be Gone.mp3"); //gonna remove this eventually altogether
 }
 
 function setup() { 
@@ -162,7 +162,7 @@ function displayEverything(){ //draws the entire map, "everything" here means ev
   for (let y = 0; y < beats; y++){
     for (let x = 0; x < lanes; x++){
       noStroke();
-      if (chart[y][x] === 1){
+      if (chart[y][x] === 1){ //gonna need to add a "2" value for long notes. Someday.
         fill("black");
       }
       else if (chart[y][x] === 0){

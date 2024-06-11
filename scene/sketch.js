@@ -13,6 +13,7 @@ let accuracy; // how much distance do you have to hit the notes? bigger is easie
 let noteSpeed; //how fast the notes go zoom, measured in pixels per frame
 let tempNote; //this is to make coding new notes easier ig
 let noteTraits = []; //the updated lane and distance array
+let beat; //this will replace player.y
 
 //variables in regards to mapchoosing
 let hoveredMap; //which of the maps is being hovered
@@ -58,7 +59,7 @@ function setup() {
   subState = "main";
   songs = ["skyFortress", "isolation", "melodySalad"];
   for (let song in songs){
-    let coverArt = "loadImage(\"maps/" + songs[song] + "/art.png\")"; //use ur brain :P this wont work
+    let coverArt = "loadImage(\"maps/" + songs[song] + "/art.png\")"; //this was a hassle to figure out, believe me
     let tempMapInfo = {
       coverArt: eval(coverArt), //eval is considered a risk :P
     }; //do smth similar w/ the other map info, eg bpm and map itself
@@ -167,7 +168,7 @@ function spawnNote(){ //gonna need to put stuff in the brackets in the future
 } //gonna need to switch this to webgl if I want to  rotate stuff :)
 
 function mainMenu(){ //the menuMenu
-  text("High budget menu. Left click for map select", windowWidth/2 - 150, windowHeight/2);
+  text("High budget menu. Left click for map select, RUN IN FULLSCREEN AND DONT CHANGE IT AT ALL COSTS AAAAAAAAAAAAAA", windowWidth/2 - 300, windowHeight/2);
   if (mouseIsPressed){
     subState = "mapSelect";
   }
@@ -205,3 +206,40 @@ function settingsMenu(){ //I cant wait for this to go unused and undeleted along
 function creditsMenu(){ //gotta thank people
   text("credit placeholder", windowWidth/2 - 150, windowHeight/2);
 }                                                                        //create buttonMan???
+
+//this all has been copy pasted from writer, will need modification ouchie ouch so much red
+//mapData[hoveredMap][thing, eg, bpm].whatever
+function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
+  if (millis() - lastUpdate >= 1000/(bpm/60)){
+    translator();
+    movePlayer(player.y + 1);
+    lastUpdate = millis();
+  }
+}
+
+function translator(){ //turns notes from the map into live notes
+  for(let x = 0; x < lanes; x++){ //may change these to nicer numbers which arent magical
+    if(chart[player.y][x] !== 0){
+      let tempNote = {
+        speed: windowHeight/(60/(trueBpm/60))/4,
+        lane: x,
+        distance: 0,  //distance it needs to travel / frames
+      };  //lets say 1 beat at 120 bpm at 60 fps one beat is 30 frames how do i know that? 
+      liveNotes.push(tempNote); //120 bpm === 2 bps, 60fps/ bps = 30
+    }
+  }
+}
+
+function arrowMan(){ //different than the arrowman in scene, will have to change scene arrowman
+  for(let i = liveNotes.length-1; i >= 0; i--){ //rewrote it to be read backwards
+    fill("white");
+    rect(windowWidth/2-120 + 240 / lanes * liveNotes[i].lane + 120/lanes, liveNotes[i].distance, 60, 60);
+    liveNotes[i].distance += liveNotes[i].speed;
+  }
+}
+
+function movePlayer(y){ //moves the player
+  if (y < beats-VISIBLE_GRID_SIZE.h && y >= 0) { //this keeps it on the grid
+    player.y = y;
+  }
+}
