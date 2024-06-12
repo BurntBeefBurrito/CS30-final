@@ -6,9 +6,9 @@
 
 let chart; //this is the magical table of yes theres a note there not to be confused with livenotes which tracks active notes with information
 let cellSize;
-const beats = 120; //
-let bpm = 480; //the speed notes are read measures in BPM hence the name
-let trueBpm = 120; //this is the actual bpm of the song, not the functional one
+const beats = 120; // 4:32
+const bpm = 368; //the speed notes are read measures in BPM hence the name
+const trueBpm = 184; //this is the actual bpm of the song, not the functional one
 let lastUpdate = 0; //yay counting
 const lanes = 4; //futureproofing
 const VISIBLE_GRID_SIZE = { //keep it at 4
@@ -16,17 +16,21 @@ const VISIBLE_GRID_SIZE = { //keep it at 4
   h: 12, //height
 };
 let state = "paint";
-let player = { //gonna need to change this
+let player = { //remove y, to be scalped for info for 
   y: 0,
+  bpm: bpm,
+  trueBpm: trueBpm,
+  beats: beats,
 };
+let position = 0;
 let liveNotes = []; //these are the spawned notes
-let skyFortress, melodySalad, isolation, beGone; //these are the songs
+let skyFortress, melodySalad, isolation, beGone, memoryMerge; //these are the songs
 
 function preload(){
   //skyFortress = loadSound("audio/Sky Fortress.mp3");
   //isolation = loadSound("audio/Isolation.mp3");
   //melodySalad = loadSound("audio/Melody Salad.mp3");
-  //beGone = loadSound("audio/You'll Be Gone.mp3"); //gonna remove this eventually altogether
+  memoryMerge = loadSound("audio/track.mp3");
 }
 
 function setup() { 
@@ -73,27 +77,27 @@ function keyPressed() { //causes various things to happen when keys are pressed
     state = "paint";
   }
   else if(key === " " && state === "paint"){ //start at start
-    player.y = 0;
+    position = 0;
     state = "test";
-    beGone.play(); //sounds a bit fuzzy?
+    memoryMerge.play(); //sounds a bit fuzzy?
   }
   else if(key === "k" && state === "paint"){ //start at hovered area
     state = "test";
-    beGone.play(0, 0, 100, 60/bpm * player.y);
+    memoryMerge.play(0, 0, 100, 60/bpm * position);
   } //seconds, each tile is bpm/60th of a second   125/60
   else if(key === " " && state === "test"){
     state = "paint";
     liveNotes = [];
-    beGone.stop();
+    memoryMerge.stop();
   }
 }
 
 function mouseWheel(event) { //I effectively copied stuff from the p5js reference here since I hadnt played with the scrollwheel
   if (event.delta >= 0){
-    movePlayer(player.y + 1);
+    movePlayer(position + 1);
   }
   else{
-    movePlayer(player.y - 1); 
+    movePlayer(position - 1); 
   }
 }
 
@@ -102,13 +106,11 @@ function mousePressed() { //places notes
   let y = Math.floor(mouseY/cellSize);
 
   let offsety = 0;
-  // if (player.y < VISIBLE_GRID_SIZE.h){//FIX THHISSSSSSSSSSSSSS
   offsety = VISIBLE_GRID_SIZE.hf;
-  // }
-  if (player.y >= beats - VISIBLE_GRID_SIZE.hf){
-    offsety = beats-player.y-VISIBLE_GRID_SIZE.hc;
+  if (position >= beats - VISIBLE_GRID_SIZE.hf){
+    offsety = beats-position-VISIBLE_GRID_SIZE.hc;
   }
-  y += player.y - VISIBLE_GRID_SIZE.hf + offsety;
+  y += position - VISIBLE_GRID_SIZE.hf + offsety;
 
   toggleCell(x, y);
 }
@@ -138,7 +140,7 @@ function generateEmptyGrid(cols, rows) { //makes an empty grid
 
 function movePlayer(y){ //moves the player
   if (y < beats-VISIBLE_GRID_SIZE.h && y >= 0) { //this keeps it on the grid
-    player.y = y;
+    position = y;
   }
 }
 
@@ -146,10 +148,10 @@ function displayVisGrid(){ //paints just a section of the notes
   for (let y = 0; y < VISIBLE_GRID_SIZE.h; y++){
     for (let x = 0; x < VISIBLE_GRID_SIZE.w; x++){
 
-      if (chart[y+player.y][x] === 1) {
+      if (chart[y+position][x] === 1) {
         fill("black");
       }
-      else if (chart[y+player.y][x] === 0){
+      else if (chart[y+position][x] === 0){
         fill("white");
       }
       rect(x * cellSize, y * cellSize, cellSize);
@@ -173,20 +175,20 @@ function displayEverything(){ //draws the entire map, "everything" here means ev
     }
   }
   fill("blue"); //this is the scrollbar (nonclickable)
-  rect(windowWidth - 85, player.y * (windowHeight/beats), 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
+  rect(windowWidth - 85, position * (windowHeight/beats), 5, VISIBLE_GRID_SIZE.h * (windowHeight/beats));
 } //close enough :shrug:
 
 function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
   if (millis() - lastUpdate >= 1000/(bpm/60)){
     translator();
-    movePlayer(player.y + 1);
+    movePlayer(position + 1);
     lastUpdate = millis();
   }
 }
 
 function translator(){ //turns notes from the map into live notes
   for(let x = 0; x < lanes; x++){ //may change these to nicer numbers which arent magical
-    if(chart[player.y][x] !== 0){
+    if(chart[position][x] !== 0){
       let tempNote = {
         speed: windowHeight/(60/(trueBpm/60))/4,
         lane: x,

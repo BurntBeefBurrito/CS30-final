@@ -31,17 +31,12 @@ let offsetx; //how offset are the lanes and things? This will be used for silly 
 let spacing; //how spaced are the lanes?
 
 //THINGS TO DO (task amogus)
-//make this read maps
-//  if you wanna load a JSON file, do it almost like an image, eg file = loadJSON("file.json");
-//add basic UI, for song selection for instance,  might write in an additional file
-//adjust notespeed to match writer
-//COPY PASTE COPY PASTE from writer
+//if you wanna load a JSON file, do it almost like an image, eg file = loadJSON("file.json");
 //get song info in separate folders for convenience (song, coverart, chart, bumf)
 //for example, itll look like maps/isolation/chart.JSON
-//then make the thing check for all the folders in maps, rather than predetermined ones
 //make it look presentable
 //Calling it SASS
-//Make tutorial text 
+//Make tutorial text
 
 //picture heaven
 function preload(){
@@ -57,11 +52,11 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   state = "menu";
   subState = "main";
-  songs = ["skyFortress", "isolation", "melodySalad"];
+  songs = ["memoryMerge", "skyFortress", "isolation", "melodySalad"];
   for (let song in songs){
     let coverArt = "loadImage(\"maps/" + songs[song] + "/art.png\")"; //this was a hassle to figure out, believe me
     let tempMapInfo = {
-      coverArt: eval(coverArt), //eval is considered a risk :P
+      coverArt: eval(coverArt), //eval is considered a risk :P, probably my favorite line for that reason alone
     }; //do smth similar w/ the other map info, eg bpm and map itself
 
     mapData.push(tempMapInfo);
@@ -206,8 +201,8 @@ function settingsMenu(){ //I cant wait for this to go unused and undeleted along
 function creditsMenu(){ //gotta thank people
   text("credit placeholder", windowWidth/2 - 150, windowHeight/2);
 }                                                                        //create buttonMan???
-
-//this all has been copy pasted from writer, will need modification ouchie ouch so much red
+//in case of emergency: bad variables are bpm, lastUpdate, trueBpm, liveNotes, beats, VISIBLE_GRID_SIZE, some of which I can deprecate
+//this all has been copy pasted from writer, will need modification ouchie ouch so much red, may need to copy paste more
 //mapData[hoveredMap][thing, eg, bpm].whatever
 function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
   if (millis() - lastUpdate >= 1000/(bpm/60)){
