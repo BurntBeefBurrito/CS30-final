@@ -13,18 +13,20 @@ let accuracy; // how much distance do you have to hit the notes? bigger is easie
 let noteSpeed; //how fast the notes go zoom, measured in pixels per frame
 let tempNote; //this is to make coding new notes easier ig
 let noteTraits = []; //the updated lane and distance array
-let beat; //this will replace player.y
+let liveNotes = [];
+let beat; //this will replace player.y/position
 
 //variables in regards to mapchoosing
 let hoveredMap; //which of the maps is being hovered
 let songs; //list of all the internal map names, used to access the map folders
-let mapData = [];
-let artTest;
+let mapData = []; //this is basic map info for all the maps, being song and coverart
+let chartedData = []; //this is the data for a map once you chose it, so its chart, bpm, etc
 
 //misc variables
 let state; // is it in a menu, or playing?
 let subState; //what menu is it in, or is the map paused? May bake into state if it seems right
 let binds; //keybindings the user presses
+let lastUpdate; //its a clock, used for counting milliseconds for note spawning
 
 //visual variables, will probably be baked together into a single object or smth
 let offsetx; //how offset are the lanes and things? This will be used for silly mechanics when i get around to them
@@ -43,7 +45,6 @@ function preload(){
   bumperImage = loadImage("images/Slingshotwoah.jpg");
   boom = loadImage("images/Boomboxgg.jpg");
   bumperDownImage = loadImage("images/SlingshotGoodJob.jpg");
-  artTest = loadImage("maps/isolation/art.png"); //how will I load an image/make a variable for every item in a list?
 }
 
 function setup() {
@@ -139,7 +140,7 @@ function keyPressed(){ //this deletes notes around a bumper when its pressed, on
   }
 }
 
-function arrowMan(){ //this is an all you can eat buffet for note management, gonna rewrite this
+function oldArrowMan(){ //deprecated... im using that word wrong
   for(let note of noteTraits){ 
     image(boom, windowWidth/2-spacing/2 + spacing / lanes * note.lane + offsetx + spacing/2/lanes, note.distance, 90, 90); //draws notes
     note.distance += note.speed; //moves notes
@@ -202,21 +203,20 @@ function creditsMenu(){ //gotta thank people
   text("credit placeholder", windowWidth/2 - 150, windowHeight/2);
 }                                                                        //create buttonMan???
 //in case of emergency: bad variables are bpm, lastUpdate, trueBpm, liveNotes, beats, VISIBLE_GRID_SIZE, some of which I can deprecate
-//this all has been copy pasted from writer, will need modification ouchie ouch so much red, may need to copy paste more
 //mapData[hoveredMap][thing, eg, bpm].whatever
 function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
   if (millis() - lastUpdate >= 1000/(bpm/60)){
     translator();
-    movePlayer(player.y + 1);
+    movePlayer(beat + 1);
     lastUpdate = millis();
   }
 }
 
 function translator(){ //turns notes from the map into live notes
   for(let x = 0; x < lanes; x++){ //may change these to nicer numbers which arent magical
-    if(chart[player.y][x] !== 0){
+    if(chart[beat][x] !== 0){
       let tempNote = {
-        speed: windowHeight/(60/(trueBpm/60))/4, //maybe I did the math right
+        speed: windowHeight/(60/(trueBpm/60))/4, //maybe I did the math right, I hope I did
         lane: x,
         distance: 0,  //distance it needs to travel / frames
       };  //lets say 1 beat at 120 bpm at 60 fps one beat is 30 frames how do i know that? 
@@ -235,6 +235,20 @@ function arrowMan(){ //different than the arrowman in scene, will have to change
 
 function movePlayer(y){ //moves the player
   if (y < beats-VISIBLE_GRID_SIZE.h && y >= 0) { //this keeps it on the grid
-    player.y = y;
+    beat = y;
   }
+}
+
+function preppednessMan(){ //this function will move the needed information for a song when needed to convenient variables
+
+  let coverArt = "loadImage(\"maps/" + songs[hoveredMap] + "/bumf.js\")"; //this was a hassle to figure out, believe me
+  let tempMapInfo = {
+    coverArt: eval(coverArt),
+    beats: 0,
+    bpm: 0,
+    trueBpm: 0,
+    
+  };
+
+  mapData.push(tempMapInfo); //I feel this stuff will come in handy
 }
