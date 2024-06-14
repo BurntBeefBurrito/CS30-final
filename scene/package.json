@@ -6,22 +6,47 @@
     },
     "extends": "eslint:recommended",
     "rules": {
-      "indent": ["warn", 2],
-      "quotes": ["warn", "double"],
-      "semi": ["warn", "always"],
-      "no-extra-parens": ["warn", "all"],
-      "curly": ["warn", "all"],
-      "eqeqeq": ["warn", "always"],
-      "no-floating-decimal": ["warn"],
-      "brace-style": ["warn", "stroustrup"],
-      "no-var": ["error"],
-  
-      "no-cond-assign": ["error", "always"],
-  
+      "indent": [
+        "warn",
+        2
+      ],
+      "quotes": [
+        "warn",
+        "double"
+      ],
+      "semi": [
+        "warn",
+        "always"
+      ],
+      "no-extra-parens": [
+        "warn",
+        "all"
+      ],
+      "curly": [
+        "warn",
+        "all"
+      ],
+      "eqeqeq": [
+        "warn",
+        "always"
+      ],
+      "no-floating-decimal": [
+        "warn"
+      ],
+      "brace-style": [
+        "warn",
+        "stroustrup"
+      ],
+      "no-var": [
+        "error"
+      ],
+      "no-cond-assign": [
+        "error",
+        "always"
+      ],
       "no-unused-vars": "off"
     },
     "globals": {
-
       "width": true,
       "height": true,
       "drawingContext": true,
@@ -399,7 +424,6 @@
       "getItem": true,
       "clearStorage": true,
       "removeItem": true,
-  
       "getAudioContext": true,
       "isSupported": true,
       "isFileSupported": true,
@@ -416,7 +440,6 @@
       "saveSound": true,
       "userStartAudio": true,
       "soundOut": true,
-  
       "select": true,
       "selectAll": true,
       "removeElements": true,
@@ -437,7 +460,6 @@
       "AUDIO": true,
       "createCapture": true,
       "createElement": true,
-  
       "collidePointPoint": true,
       "collidePointCircle": true,
       "collidePointEllipse": true,
@@ -456,8 +478,12 @@
       "collideLinePoly": true,
       "collidePolyPoly": true,
       "collidePointTriangle": true,
-
       "deltaTime": true
     }
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.4.0",
+    "eslint": "^9.4.0",
+    "globals": "^15.4.0"
   }
 }

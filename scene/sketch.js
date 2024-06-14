@@ -216,7 +216,7 @@ function translator(){ //turns notes from the map into live notes
   for(let x = 0; x < lanes; x++){ //may change these to nicer numbers which arent magical
     if(chart[player.y][x] !== 0){
       let tempNote = {
-        speed: windowHeight/(60/(trueBpm/60))/4,
+        speed: windowHeight/(60/(trueBpm/60))/4, //maybe I did the math right
         lane: x,
         distance: 0,  //distance it needs to travel / frames
       };  //lets say 1 beat at 120 bpm at 60 fps one beat is 30 frames how do i know that? 
