@@ -1,5 +1,6 @@
 #Beta testing
-ask clowns and judge their judgement
+- ask people and judge their judgement
+- I did not in fact do that because my project hadn't reached a "testable" state
 
 ##Compsci aware person
 - ADVICE

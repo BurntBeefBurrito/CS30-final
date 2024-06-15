@@ -103,6 +103,7 @@ function menuMan(){ //...its a menu manager...
 }
 
 function playing(){ //this manages other functions while playing the game
+  text("NOT CURRENTLY FUNCTIONAL DESPITE BEING THE MAIN FOCUS", windowWidth/2, windowHeight/2);
   bumperMan();
   arrowMan();
   if(random(0, 60) <= 3){ //this line will be replaced once I start mapping
@@ -196,11 +197,12 @@ function mouseWheel(event) { //this will come in handy :P
     else if (event.delta <= 0 && hoveredMap > 0){
       hoveredMap -= 1;
     }
+    for(let i = 0; i < songs.length; i++){
+      mapData[i].track.stop();
+    }
+    mapData[hoveredMap].track.play();
   }
-  for(let i = 0; i < songs.length; i++){
-    mapData[i].track.stop(); //eh?
-  }
-  mapData[hoveredMap].track.play(); //eh?
+  
 }
 
 function settingsMenu(){ //I cant wait for this to go unused and undeleted along with creditsMenu

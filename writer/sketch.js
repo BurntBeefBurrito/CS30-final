@@ -6,7 +6,7 @@
 
 let chart; //this is the magical table of yes theres a note there not to be confused with livenotes which tracks active notes with information
 let cellSize;
-const beats = 120; // 4:32
+const beats = 120; // Memory Merge would have been 1668 beats, yikes
 const bpm = 368; //the speed notes are read measures in BPM hence the name
 const trueBpm = 184; //this is the actual bpm of the song, not the functional one
 let lastUpdate = 0; //yay counting
@@ -22,7 +22,7 @@ let player = { //remove y, to be scalped for info for
   trueBpm: trueBpm,
   beats: beats,
 };
-let position = 0;
+let position = 0; //how far down the map are we?
 let liveNotes = []; //these are the spawned notes
 let skyFortress, melodySalad, isolation, beGone, memoryMerge; //these are the songs
 
@@ -42,7 +42,7 @@ function setup() {
   frameRate(60);
 }
 
-function draw() {
+function draw() { //this primarily calls other functions with more niche jobs
   createCanvas(windowWidth, windowHeight);
   if(windowHeight < windowWidth){
     cellSize = height/VISIBLE_GRID_SIZE.h;

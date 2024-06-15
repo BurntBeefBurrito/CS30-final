@@ -5,7 +5,7 @@
 - dont overestimate your time in class
 
 ## What was the hardest part? Or as I'll interpret it; what parts were challenging, but still got solved?
-- Understanding VScode and Githubs quirks, since I might have lost a bit of code over time while working at home a bit
+- Understanding VScode and Githubs quirks, also I might have lost a bit of code over time while working at home a bit
 - A close second had to have been basic mathematics, like for the map writers "scrollbar" at the right, or note speed, I swear I forgot algebra
 
 ## Did I complete everything in my need to have list?
@@ -29,6 +29,8 @@ little red underlines telling me when I made an error.
 - I figured out how to open images, and other information from folders in a quirky way using eval
 - I think in terms of learning, I learned a lot, but accomplishing stuff on the other hand...
 - I didn't need any sort of tutorials, only explanations for things I didn't fully understand
+- I'm proud of how I did my comments over the course of the project
+- The way I did the scrolling for writer on the left seemed kinda neat
 
 ## Misc comments/regrets
 - I didn't get the thing together enough to ask for input from others
@@ -36,6 +38,9 @@ little red underlines telling me when I made an error.
 - I'm really upset that I didn't put the time to fix ESLint with a wrench or something because this legitimately couldve been amazing
 - I got so sidetracked in the side stuff that I didn't end up making the actual rhythm game
 - Also I'm REALLY self conscious about the music I listen to so this is all kinda a gamble
+- The music I chose had kinda uncertain bpms, somehow the internet just didn't have concise answers?
+- Also how did other people end up using like 800 lines for their projects?
+- I also originally wanted the thing to have eyecandy (see inspirations in proposal.md) but honestly I'm glad I didn't touch that
 
 ## TLDR
-I drastically underestimated the time requirement for the projects side stuff
+I drastically underestimated the time requirement for the projects side tasks I also said I'll have this for 11:30
