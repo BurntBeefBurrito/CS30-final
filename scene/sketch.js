@@ -31,7 +31,7 @@ let lastUpdate; //its a clock, used for counting milliseconds for note spawning
 //visual variables, will probably be baked together into a single object or smth
 let offsetx; //how offset are the lanes and things? This will be used for silly mechanics when i get around to them
 let spacing; //how spaced are the lanes?
-
+let tester;
 //THINGS TO DO (task amogus)
 //if you wanna load a JSON file, do it almost like an image, eg file = loadJSON("file.json");
 //get song info in separate folders for convenience (song, coverart, chart, bumf)
@@ -53,11 +53,13 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   state = "menu";
   subState = "main";
-  songs = ["memoryMerge", "skyFortress", "isolation", "melodySalad"];
+  songs = ["skyFortress", "isolation", "melodySalad", "memoryMerge"];
   for (let song in songs){
     let coverArt = "loadImage(\"maps/" + songs[song] + "/art.png\")"; //this was a hassle to figure out, believe me
+    let track = "loadSound(\"maps/" + songs[song] + "/track.mp3\")"; //this was a hassle to figure out, believe me
     let tempMapInfo = {
       coverArt: eval(coverArt), //eval is considered a risk :P, probably my favorite line for that reason alone
+      track: eval(track),
     }; //do smth similar w/ the other map info, eg bpm and map itself
 
     mapData.push(tempMapInfo);
@@ -164,20 +166,22 @@ function spawnNote(){ //gonna need to put stuff in the brackets in the future
 } //gonna need to switch this to webgl if I want to  rotate stuff :)
 
 function mainMenu(){ //the menuMenu
-  text("High budget menu. Left click for map select, RUN IN FULLSCREEN AND DONT CHANGE IT AT ALL COSTS AAAAAAAAAAAAAA", windowWidth/2 - 300, windowHeight/2);
+  text("I would advise you to check out writer instead, I'm more proud of that. RUN IN FULLSCREEN AND DONT CHANGE IT AT ALL COSTS AAAAAAAAAAAAAA", windowWidth/2 - 300, windowHeight/2);
   if (mouseIsPressed){
     subState = "mapSelect";
   }
 }
 
 function mapSelectMenu(){ //mmm choices
-  text("map placeholder", windowWidth/2 - 150, windowHeight/2);
+  text("map placeholder", windowWidth/2 - 96, windowHeight/2 - 100);
   for(let i = 0; i < songs.length; i++){
     image(mapData[i].coverArt, windowWidth/2 + i * 150 - 150 * hoveredMap -50, windowHeight/2, 100, 100); //cover art
   }
+  text(songs[hoveredMap], windowWidth/2 - 96, windowHeight/2 + 100);
   if (mouseIsPressed && mouseX > windowWidth/2 - 100 && mouseX < windowWidth/2 + 0 //spaghetti code for boxes :D
   && mouseY > windowHeight / 2 - 50 && mouseY < windowHeight / 2 + 50){ 
     state = "play";
+
   }
 }
 
@@ -193,6 +197,10 @@ function mouseWheel(event) { //this will come in handy :P
       hoveredMap -= 1;
     }
   }
+  for(let i = 0; i < songs.length; i++){
+    mapData[i].track.stop(); //eh?
+  }
+  mapData[hoveredMap].track.play(); //eh?
 }
 
 function settingsMenu(){ //I cant wait for this to go unused and undeleted along with creditsMenu
@@ -201,9 +209,11 @@ function settingsMenu(){ //I cant wait for this to go unused and undeleted along
 
 function creditsMenu(){ //gotta thank people
   text("credit placeholder", windowWidth/2 - 150, windowHeight/2);
-}                                                                        //create buttonMan???
-//in case of emergency: bad variables are bpm, lastUpdate, trueBpm, liveNotes, beats, VISIBLE_GRID_SIZE, some of which I can deprecate
+}    
+
+
 //mapData[hoveredMap][thing, eg, bpm].whatever
+//MOST OF THE CODE BELOW WAS COPY PASTED FROM WRITER AND BEING MERGED INTO THIS
 function rabbit(){ //the function being named this is a reference to marathon pacekeepers who are informally nicknamed "rabbits" according to wikipedia
   if (millis() - lastUpdate >= 1000/(bpm/60)){
     translator();
@@ -218,14 +228,14 @@ function translator(){ //turns notes from the map into live notes
       let tempNote = {
         speed: windowHeight/(60/(trueBpm/60))/4, //maybe I did the math right, I hope I did
         lane: x,
-        distance: 0,  //distance it needs to travel / frames
-      };  //lets say 1 beat at 120 bpm at 60 fps one beat is 30 frames how do i know that? 
-      liveNotes.push(tempNote); //120 bpm === 2 bps, 60fps/ bps = 30
-    }
+        distance: 0,                                     //distance it needs to travel / frames
+      };                                                 //lets say 1 beat at 120 bpm at 60 fps one beat is 30 frames how do i know that? 
+      liveNotes.push(tempNote);                          //120 bpm === 2 bps, 60fps/ bps = 30
+    }                                                    //Math :3
   }
 }
 
-function arrowMan(){ //different than the arrowman in scene, will have to change scene arrowman
+function arrowMan(){ 
   for(let i = liveNotes.length-1; i >= 0; i--){ //rewrote it to be read backwards
     fill("white");
     rect(windowWidth/2-120 + 240 / lanes * liveNotes[i].lane + 120/lanes, liveNotes[i].distance, 60, 60);
@@ -239,9 +249,9 @@ function movePlayer(y){ //moves the player
   }
 }
 
-function preppednessMan(){ //this function will move the needed information for a song when needed to convenient variables
+function preppednessMan(){ //this function will move the needed information for a song when needed to a convenient object
 
-  let coverArt = "loadImage(\"maps/" + songs[hoveredMap] + "/bumf.js\")"; //this was a hassle to figure out, believe me
+  let coverArt = "loadImage(\"maps/" + songs[hoveredMap] + "/bumf.js\")";
   let tempMapInfo = {
     coverArt: eval(coverArt),
     beats: 0,
@@ -250,5 +260,5 @@ function preppednessMan(){ //this function will move the needed information for 
     
   };
 
-  mapData.push(tempMapInfo); //I feel this stuff will come in handy
+  chartedDataData.push(tempMapInfo); //I feel this stuff will come in handy
 }

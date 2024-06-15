@@ -30,7 +30,7 @@ function preload(){
   //skyFortress = loadSound("audio/Sky Fortress.mp3");
   //isolation = loadSound("audio/Isolation.mp3");
   //melodySalad = loadSound("audio/Melody Salad.mp3");
-  memoryMerge = loadSound("audio/track.mp3");
+  memoryMerge = loadSound("audio/track.mp3"); //don't judge me
 }
 
 function setup() { 
